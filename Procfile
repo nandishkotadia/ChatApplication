@@ -1,0 +1,2 @@
+web:  java -Dserver.port=$PORT -jar target/dependency/jetty-runner.jar target/*.war --mongodb.uri=$MONGODB_URI --mongo.db=$MONGODB --mongoURI.username=$MONGO_USERNAME --mongoURI.password=
+$MONGO_PASSWORD
