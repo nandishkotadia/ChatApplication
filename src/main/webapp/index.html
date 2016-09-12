@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<!-- Mirrored from www.seantheme.com/color-admin-v1.8/admin/html/register_v3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 26 Sep 2015 08:05:35 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Color Admin | Register Page</title>
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+	name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+
+<!-- ================== BEGIN BASE CSS STYLE ================== -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+<link href="assets/css/animate.min.css" rel="stylesheet" />
+<link href="assets/css/style.min.css" rel="stylesheet" />
+<link href="assets/css/style-responsive.min.css" rel="stylesheet" />
+<link href="assets/css/theme/default.css" rel="stylesheet" id="theme" />
+<!-- ================== END BASE CSS STYLE ================== -->
+
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<!-- ================== END BASE JS ================== -->
+</head>
+<body class="pace-top bg-white">
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade in">
+		<span class="spinner"></span>
+	</div>
+	<!-- end #page-loader -->
+
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+		<!-- begin register -->
+		<div class="register register-with-news-feed">
+			<!-- begin news-feed -->
+			<div class="news-feed">
+				<div class="news-image">
+					<img src="assets/img/login-bg/bg-8.jpg" alt="" />
+				</div>
+				<div class="news-caption">
+					<h4 class="caption-title">
+						<i class="fa fa-edit text-success"></i> Announcing the
+						DreamTechDev Message app
+					</h4>
+				</div>
+			</div>
+			<!-- end news-feed -->
+			<!-- begin right-content -->
+			<div class="right-content">
+				<!-- begin register-header -->
+				<h1 class="register-header">
+					Sign Up <small>Create your DreamTechDev Message Account.
+						It’s free and always will be.</small>
+				</h1>
+				<!-- end register-header -->
+				<!-- begin register-content -->
+				<div class="register-content">
+					<form id="register" method="POST" class="margin-bottom-0">
+						<label class="control-label">Name</label>
+						<div class="row row-space-10">
+							<div class="col-md-6 m-b-15">
+								<input type="text" class="form-control" id="firstName"
+									required="required" placeholder="First name" />
+							</div>
+							<div class="col-md-6 m-b-15">
+								<input type="text" class="form-control" id="lastName"
+									required="required" placeholder="Last name" />
+							</div>
+						</div>
+						<label class="control-label">Username</label>
+						<div class="row m-b-15">
+							<div class="col-md-12">
+								<input type="text" id="username" class="form-control"
+									required="required" placeholder="Username" />
+							</div>
+						</div>
+						<label class="control-label">Re-enter username</label>
+						<div class="row m-b-15">
+							<div class="col-md-12">
+								<input type="text" id="confirm_username" class="form-control"
+									required="required" placeholder="Re-enter Username" />
+							</div>
+						</div>
+						<label class="control-label">Password</label>
+						<div class="row m-b-15">
+							<div class="col-md-12">
+								<input type="password" id="password" class="form-control"
+									required="required" id="password" placeholder="Password"
+									data-container="body" data-toggle="popover"
+									data-placement="top"
+									data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+									data-original-title="" title="" />
+							</div>
+						</div>
+
+
+						<!--   <div class="checkbox m-b-30">
+                            <label>
+                                <input type="checkbox" /> By clicking Sign Up, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Data Policy</a>, including our <a href="#">Cookie Use</a>.
+                            </label>
+                        </div> -->
+						<div class="register-buttons">
+							<input type="submit" class="btn btn-primary btn-block btn-lg"
+								value="Sign Up"></input>
+						</div>
+						<div class="m-t-20 m-b-40 p-b-40">
+							Already a member? Click <a href="login.html">here</a> to
+							login.
+						</div>
+						<hr />
+						<p class="text-center text-inverse">&copy; DreamTechDev
+							Message App All Right Reserved 2015</p>
+					</form>
+				</div>
+				<!-- end register-content -->
+			</div>
+			<!-- end right-content -->
+		</div>
+		<!-- end register -->
+
+	</div>
+	<!-- end page container -->
+
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.1.0/jquery-migrate-1.1.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+	<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<!-- ================== END BASE JS ================== -->
+
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="assets/js/apps.min.js"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<script>
+	 var stompClient = null;
+		$(document).ready(function() {
+			App.init();
+           // $('#password').tooltip('hide');
+			var socket = new SockJS('/hello');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+            });
+		});
+		$('#register').submit(function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            var name = $('#firstName').val() + " " + $('#lastName').val();
+			var username = $('#username').val();
+			var confirm_username = $('#confirm_username').val();
+			var password = $('#password').val();
+			if(username != confirm_username){
+				alert("Username and conirm_username should match.....");
+				return;
+			}
+			if(password.length < 5){
+				alert("Password must be alteast 5 character long");
+				return;
+			}
+			
+			var SendInfo = {"username":username,"password":password,'displayName':name};
+			$.ajax({
+	            type: 'POST',
+	            url: '/user/register',
+	            data: JSON.stringify(SendInfo),
+	            contentType: "application/json; charset=utf-8",
+	            traditional: true,
+	            success: function (data) {
+	                if(data=="SUCCESS"){
+	           			alert("User registered successfully");
+	           			stompClient.send("/app/newUserNotifier",{},JSON.stringify({"username":username,'displayName':name,'status':'OFFLINE'}) );
+	           			window.location.href="login.html";
+	                }
+	                else if(data=="EXISTS"){
+	                	alert("User already exists..");
+	                }
+	            }
+	        });//ajax close
+			
+		});//login click close
+        function verify(){
+           /* var pass = document.getElementById('password').value;
+            
+            if(pass.length<5)
+            {
+                
+
+                 return false;
+            }
+            return true;*/
+           
+        }
+	</script>
+
+</body>
+
+<!-- Mirrored from www.seantheme.com/color-admin-v1.8/admin/html/register_v3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 26 Sep 2015 08:05:36 GMT -->
+</html>

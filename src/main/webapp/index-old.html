@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MessageApp</title>
+    <script src="sockjs-0.3.4.js"></script>
+    <script src="stomp.js"></script>
+    <script src="assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+	<script src="assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    var stompClient = null;
+    var senderId = localStorage.getItem("senderId");
+    $(document).ready(function() {
+    	 
+    	/* alert(senderId); */
+    	if(senderId)
+    	{
+    		var socket = new SockJS('/hello');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                /* setConnected(true); */
+                console.log('Connected: ' + frame);
+                 stompClient.subscribe('/topic/greetings', function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                }); 
+                
+                stompClient.subscribe('/topic/'+senderId, function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                }); 
+            });
+    	}
+    });
+        
+		
+        /* function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+            document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+            document.getElementById('response').innerHTML = '';
+        } */
+
+        function connect() {
+        	/* var userId = document.getElementById('userId').value;
+            var socket = new SockJS('/hello');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                 stompClient.subscribe('/topic/greetings', function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                }); 
+                
+                stompClient.subscribe('/topic/'+userId, function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                }); 
+            }); */
+        }
+        
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            /* setConnected(false); */
+            console.log("Disconnected");
+        }
+
+        function sendName() {
+        	
+        	var receiverId = document.getElementById('receiverId').value;
+            var content = document.getElementById('content').value;
+            //stompClient.send("/app/hello/sender/"+senderId+"/receiver/"+receiverId+"/", {}, JSON.stringify({ 'name': name}) );
+        	stompClient.send("/app/message/sender/"+senderId+"/receiver/"+receiverId,{},JSON.stringify({ 'content': content}) );
+        }
+
+        function showGreeting(message) {
+            var response = document.getElementById('response');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        }
+    </script>
+</head>
+<body onload="disconnect()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div>
+    <!-- <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <div id="userDiv">
+        <label>Enter your id?</label><input type="text" id="userId" />
+    </div> -->
+    <div id="conversationDiv">
+        <label>Enter the message...</label><input type="text" id="content" />
+        <label>Enter the receiver id...</label><input type="text" id="receiverId" />
+        <button id="sendName" onclick="sendName();">Send</button>
+        <p id="response"></p>
+    </div>
+</div>
+</body>
+</html>

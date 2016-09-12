@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MessageApp</title>
+<script src="sockjs-0.3.4.js"></script>
+<script src="stomp.js"></script>
+<script type="text/javascript">
+		function login()
+		{
+			
+			var username = document.getElementById('username').value;
+			var password = document.getElementById('password').value;
+			alert("validating "+username+" "+password);
+		}
+       
+    </script>
+</head>
+<body>
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<div>
+
+		<div id="conversationDiv">
+			<form action="">
+				<label>Enter the username...</label><input type="text" id="username" /><br/>
+				<label>Enter the password...</label><input type="password"
+					id="password" /> <br/>
+					<input id="login" type="submit" onclick="login();" value="Login" />
+				<p id="response"></p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

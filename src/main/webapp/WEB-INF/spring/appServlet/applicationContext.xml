@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security" 
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 		http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 		http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+						http://www.springframework.org/schema/mvc 			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/aop 			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+						http://www.springframework.org/schema/security 		http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean
+				class="com.websocket.app.security.MessageAppSessionHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	<mvc:resources mapping="/**" location="/" />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<context:property-placeholder location="classpath:*.properties"/>
+		
+	<!-- Place to put all the component scans for global context -->
+	<context:component-scan base-package="com.websocket.app" />
+	<!-- Configure to inject JSON as request and response in method handler -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Configure bean to convert JSON to POJO and vice versa -->
+	<bean id="jsonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+	<security:http pattern="/user/login" security="none" />
+	<security:http pattern="/user/register" security="none" />
+
+	<!-- Configure Security layer -->
+	<security:http create-session="stateless"
+		use-expressions="true" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/users/**" access="hasRole('ROLE_USER')" />
+		<security:custom-filter position="PRE_AUTH_FILTER"
+			ref="preAuthFilter" />
+		<security:csrf disabled="true" />
+	</security:http>
+
+	<bean id="preAuthFilter"
+		class="com.websocket.app.security.UserSessionAuthenticationFilter">
+		<property name="authenticationManager" ref="authManager" />
+	</bean>
+
+	<bean id="preAuthenticationProvider"
+		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<property name="preAuthenticatedUserDetailsService" ref="userAuthenticationService" />
+	</bean>
+
+	<security:authentication-manager alias="authManager">
+		<security:authentication-provider
+			ref="preAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean id="userAuthenticationService" class="com.websocket.app.security.UserAuthenticationService" />
+
+	<bean id="preAuthenticatedProcessingFilterEntryPoint"
+		class="com.websocket.app.security.MessageAppAuthenticationEntryPointDenied" />
+	
+	<!--<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
+	<mongo:db-factory dbname="${mongo.db}" mongo-ref="mongo"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>-->
+	
+	<mongo:repositories base-package="com.websocket.app.repository" />
+	
+	<mongo:mongo-client host="${mongo.host}" port="${mongo.port}">
+    	<mongo:client-options connections-per-host="${mongo.db.pool.size}"
+    	threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
+	</mongo:mongo-client>
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg value="${mongo.db}" />
+		<constructor-arg name="userCredentials" ref="mongoCredentials"/> 
+	</bean>
+
+	<bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
+		<constructor-arg name="username" value="${mongoURI.username}" />
+		<constructor-arg name="password" value="${mongoURI.password}" />
+	</bean>
+
+	<bean class="com.mongodb.MongoURI" id="mongoURI">
+		<constructor-arg value="${mongodb.uri}" />
+	</bean>
+
+	<bean class="com.mongodb.Mongo" id="mongo">
+		<constructor-arg ref="mongoURI" />
+	</bean>
+</beans>
