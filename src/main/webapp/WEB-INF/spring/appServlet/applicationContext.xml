@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:security="http://www.springframework.org/schema/security" 
+	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 		http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context 		http://www.springframework.org/schema/context/spring-context.xsd
@@ -22,11 +22,18 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 	<mvc:resources mapping="/**" location="/" />
+	<mvc:view-controller path="/" view-name="index" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".html" />
+	</bean>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<context:property-placeholder location="classpath:*.properties"/>
-		
+	<context:property-placeholder location="classpath:*.properties" />
+
 	<!-- Place to put all the component scans for global context -->
 	<context:component-scan base-package="com.websocket.app" />
 	<!-- Configure to inject JSON as request and response in method handler -->
@@ -49,8 +56,10 @@
 	<!-- Configure Security layer -->
 	<security:http create-session="stateless"
 		use-expressions="true" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
-		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
-		<security:intercept-url pattern="/users/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/user/**"
+			access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/users/**"
+			access="hasRole('ROLE_USER')" />
 		<security:custom-filter position="PRE_AUTH_FILTER"
 			ref="preAuthFilter" />
 		<security:csrf disabled="true" />
@@ -75,24 +84,20 @@
 
 	<bean id="preAuthenticatedProcessingFilterEntryPoint"
 		class="com.websocket.app.security.MessageAppAuthenticationEntryPointDenied" />
-	
-	<!--<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
-	<mongo:db-factory dbname="${mongo.db}" mongo-ref="mongo"/>
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-	</bean>-->
-	
+	<!--<mongo:mongo host="${mongo.host}" port="${mongo.port}" /> <mongo:db-factory 
+		dbname="${mongo.db}" mongo-ref="mongo"/> <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> 
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> </bean> -->
+
 	<mongo:repositories base-package="com.websocket.app.repository" />
-	
-	<!-- <mongo:mongo-client host="${mongo.host}" port="${mongo.port}">
-    	<mongo:client-options connections-per-host="${mongo.db.pool.size}"
-    	threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
-	</mongo:mongo-client> -->
+
+	<!-- <mongo:mongo-client host="${mongo.host}" port="${mongo.port}"> <mongo:client-options 
+		connections-per-host="${mongo.db.pool.size}" threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/> 
+		</mongo:mongo-client> -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg value="${mongo.db}" />
-		<constructor-arg name="userCredentials" ref="mongoCredentials"/> 
+		<constructor-arg name="userCredentials" ref="mongoCredentials" />
 	</bean>
 
 	<bean id="mongoCredentials" class="org.springframework.data.authentication.UserCredentials">
