@@ -85,10 +85,10 @@
 	
 	<mongo:repositories base-package="com.websocket.app.repository" />
 	
-	<mongo:mongo-client host="${mongo.host}" port="${mongo.port}">
+	<!-- <mongo:mongo-client host="${mongo.host}" port="${mongo.port}">
     	<mongo:client-options connections-per-host="${mongo.db.pool.size}"
     	threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"/>
-	</mongo:mongo-client>
+	</mongo:mongo-client> -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongo" />
 		<constructor-arg value="${mongo.db}" />
