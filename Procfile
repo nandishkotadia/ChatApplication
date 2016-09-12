@@ -1,1 +1,1 @@
-web:  java -jar target/dependency/jetty-runner.jar --port 8082 target/*.war --mongodb.uri=MONGODB_URI 
+web:  java -jar target/dependency/jetty-runner.jar --port 8082 target/*.war --mongodb.uri=$MONGODB_URI 
