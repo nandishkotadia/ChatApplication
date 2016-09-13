@@ -146,13 +146,18 @@
 
 	<script>
 	 var stompClient = null;
+	 var myId = localStorage.getItem("myId");
 		$(document).ready(function() {
+			if(myId){
+   				window.location.href='home.html';
+	    	}
 			App.init();
            // $('#password').tooltip('hide');
 			var socket = new SockJS('/hello');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
             });
+            
 		});
 		$('#register').submit(function(e){
             e.preventDefault();

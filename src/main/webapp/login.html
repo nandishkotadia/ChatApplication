@@ -105,7 +105,12 @@
 	<!-- ================== END PAGE LEVEL JS ================== -->
 
 	<script>
+		var myId = localStorage.getItem("myId");
+		//console.log("sas"+myId);
 		$(document).ready(function() {
+			if(myId){
+   				window.location.href='home.html';
+	    	}
 			App.init();
 	
 		$('#login').submit(function(e){
