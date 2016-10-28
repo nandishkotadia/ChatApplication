@@ -131,7 +131,7 @@
 	                	if(typeof(Storage) !== "undefined") {
 	                	 	localStorage.setItem("WWW-Authenticate",xhr.getResponseHeader("WWW-Authenticate"));
 	                	 	localStorage.setItem("CLIENT_SECRET_KEY",xhr.getResponseHeader("CLIENT_SECRET_KEY"));
-	                		localStorage.setItem("myId",username);
+	                		localStorage.setItem("myId",data['username']);
 	                	 	localStorage.setItem("receiverId","");
 	                	 	window.location.href="home.html";
 	                	}
